@@ -1,22 +1,39 @@
 <template>
 	<li>
 		<p>
-			<span class="highlight">{{ name }}</span> 
-			rated the learning experience 
-			<span :class="ratingClass">{{ rating }}</span
-			>.
+			The Supervisor Name:
+			<span class="highlight">{{ name }}</span>
+			The Project:
+			<span class="highlight">{{ project }}</span>
+			University:
+			<span class="highlight">{{ university }}</span>
+			Supervisor Email:
+			<span class="highlight" @click="sendEmail(email)">{{ email }}</span>
+			rated the learning experience
+			<span :class="ratingClass">{{ rating }}</span>.
 		</p>
 	</li>
 </template>
 
 <script>
 export default {
-	props: ['name', 'rating'],
+	props: ['name', 'project', 'university', 'email', 'rating'],
 	computed: {
 		ratingClass() {
 			return 'highlight rating--' + this.rating;
 		},
 	},
+	methods: {
+		sendEmail(email) {
+			const subject = '邮件主题';
+			const body = '邮件正文';
+
+			const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+			// 打开默认的邮件客户端
+			window.location.href = mailtoLink;
+		}
+	}
 };
 </script>
 

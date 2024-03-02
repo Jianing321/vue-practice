@@ -1,15 +1,28 @@
 <template>
 	<section>
 		<base-card>
-			<h2>How was you learning experience?</h2>
+			<h2>Record research projects that interest you</h2>
 
 			<form @submit.prevent="submitSurvey">
 				<div class="form-control">
-					<label for="name">Your Name</label>
+					<label for="name"> Supervisors Name</label>
 					<input type="text" id="name" name="name" v-model.trim="enteredName" />
 				</div>
+				<div class="form-control">
+					<label for="project"> Project</label>
+					<input type="text" id="project" name="project" v-model.trim="enteredProject" />
+				</div>
+				<div class="form-control">
+					<label for="university"> University</label>
+					<input type="text" id="university" name="university" v-model.trim="enteredUniversity" />
+				</div>
 
-				<h3>My learning experience was ...</h3>
+				<div class="form-control">
+					<label for="email"> Supervisor Email</label>
+					<input type="text" id="email" name="email" v-model.trim="enteredEmail" />
+				</div>
+
+				<h3>My Level of satisfaction ... </h3>
 				<div class="form-control">
 					<input type="radio" id="rating-poor" value="poor" name="rating" v-model="chosenRating" />
 					<label for="rating-poor">Poor</label>
@@ -47,14 +60,15 @@ export default {
 	data() {
 		return {
 			enteredName: '',
+			enteredProject: '',
+			enteredUniversity:'',
+			enteredEmail:'',
 			chosenRating: null,
 			invalidInput: false,
-			error: null,
-			databaseUrl:
-				'https://vue-http-demo-cfceb-default-rtdb.firebaseio.com/surveys',
+			error: null
 		};
 	},
-	//emits: ['survey-submit'],
+
 	methods: {
 		submitSurvey() {
 			if (this.enteredName === '' || !this.chosenRating) {
@@ -64,10 +78,7 @@ export default {
 			this.invalidInput = false;
 			this.error = null;
 
-			// this.$emit('survey-submit', {
-			// 	userName: this.enteredName,
-			// 	rating: this.chosenRating,
-			// });
+
 			fetch('https://vue-h-demo-default-rtdb.europe-west1.firebasedatabase.app/surveys.json', {
 				method: 'POST',
 				headers: {
@@ -75,6 +86,9 @@ export default {
 				},
 				body: JSON.stringify({
 					name: this.enteredName,
+					project: this.enteredProject,
+					university: this.enteredUniversity,
+					email: this.enteredEmail,
 					rating: this.chosenRating,
 				}),
 			}).then(response => {

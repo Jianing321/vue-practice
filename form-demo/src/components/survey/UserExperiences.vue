@@ -11,7 +11,7 @@
 				survey results first</p>
 			<ul v-else="!isLoading && results &&results.length > 0">
 
-				<survey-result v-for="result in results" :key="result.id" :name="result.name" :rating="result.rating">
+				<survey-result  v-for="result in results" :key="result.id" :name="result.name" :project="result.project" :university="result.university" :email="result.email" :rating="result.rating">
 				</survey-result>
 			</ul>
 		</base-card>
@@ -47,7 +47,7 @@ export default {
 					this.isLoading = false;
 					const results = [];
 					for (const id in data) {
-						results.push({ id: id, name: data[id].name, rating: data[id].rating, });
+						results.push({ id: id, name: data[id].name, project:data[id].project, university:data[id].university, email:data[id].email, rating: data[id].rating, });
 
 					}
 					this.results = results;
